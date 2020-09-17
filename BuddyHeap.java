@@ -238,6 +238,7 @@ public class BuddyHeap {
 		}
 	}
 	public static void main(String[] args) {
+		System.out.println("你好");
 		Config config = new Config();
 		config.init();
 		BuddyHeap bh = new BuddyHeap(config);
