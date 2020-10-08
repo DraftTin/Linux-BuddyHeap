@@ -232,7 +232,7 @@ public class BuddyHeapMgr {
 	}
 
 	// 描述：随机释放某个页框
-	public String randomFree() {/////////////////////////////
+	public String randomFree() {   /////////////////////////////
         if(tmpPageNum.isEmpty()) {
             System.out.println("没有能够释放的空间");
             return "没有能够释放的空间\n";
@@ -295,6 +295,8 @@ public class BuddyHeapMgr {
     public void term() {
 	    System.out.println("Bye");
     }
+
+    public void play() {System.out.println("playing");}
 
 //	public static void main(String[] args) {   ///////////////////////////////////////////////////////////////
 //		Config config = new Config();
