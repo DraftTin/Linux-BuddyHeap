@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="rootPane" prefHeight="360.0" prefWidth="540.0" stylesheets="@../css/setWindow.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.setWindow.setController">
+<!--                                                                                                                                                                                          不加@会找不到，为啥呢？-->
+   <children>
+      <FlowPane layoutX="1.0" layoutY="1.0" prefHeight="360.0" prefWidth="540.0">
+         <children>
+            <HBox alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="541.0">
+               <children>
+                  <Button fx:id="minBtn" mnemonicParsing="false" onAction="#minWindow" />
+                  <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeSystem" />
+               </children>
+            </HBox>
+            <VBox prefHeight="320.0" prefWidth="541.0">
+               <children>
+                  <HBox alignment="TOP_CENTER" prefHeight="38.0" prefWidth="481.0">
+                     <children>
+                        <Label prefWidth="200.0" text="请选择物理空间大小：" />
+                        <ChoiceBox fx:id="spaceSizeBtn" prefWidth="150.0" value="256MB">
+                           <items>
+                              <FXCollections fx:factory="observableArrayList">
+                                 <String fx:value="256MB" />
+                                 <String fx:value="512MB" />
+                              </FXCollections>
+                           </items>
+                        </ChoiceBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="481.0">
+                     <children>
+                        <Label prefWidth="200.0" text="请选择每个页框的大小：" />
+                        <ChoiceBox fx:id="pageSizeBtn" prefWidth="150.0" value="256KB">
+                           <items>
+                              <FXCollections fx:factory="observableArrayList">
+                                 <String fx:value="1KB" />
+                                 <String fx:value="2KB" />
+                                 <String fx:value="4KB" />
+                                 <String fx:value="256KB" />
+                              </FXCollections>
+                           </items>
+                        </ChoiceBox>
+                     </children>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="53.0" prefWidth="450.0">
+                     <children>
+                        <Button fx:id="sureBtn" mnemonicParsing="false" onAction="#sureButtonAction">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <FlowPane.margin>
+                  <Insets />
+               </FlowPane.margin>
+               <padding>
+                  <Insets right="60.0" top="80.0" />
+               </padding>
+            </VBox>
+         </children>
+      </FlowPane>
+   </children>
+</AnchorPane>
