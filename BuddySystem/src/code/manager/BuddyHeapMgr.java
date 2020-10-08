@@ -225,7 +225,7 @@ public class BuddyHeapMgr {
 	// 描述：随机申请一定数量的的页框
 	public String randomAllocate() {  /////////////////////////
 		String res = "";
-		int size = (int)(Math.random() * 1.1 * alloSizeOpt.get(NUM - 1));
+		int size = (int)(Math.random() * 1.1 * alloSizeOpt.get(NUM - 1)) + 1;
 		System.out.println("申请页框数: " + size);
 		res += "申请页框数: " + size +" | " + malloc(size) + "\n";
 		return res;
