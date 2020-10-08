@@ -25,7 +25,7 @@
           </Tab>
         </tabs>
       </TabPane>
-      <Label layoutX="757.0" layoutY="233.0" text="初始信息：" />
+      <Label layoutX="766.0" layoutY="244.0" text="初始信息：" />
       <Label layoutX="725.0" layoutY="286.0" text="内存空间大小:" />
       <Label layoutX="743.0" layoutY="324.0" text="页框大小:" />
       <Label layoutX="766.0" layoutY="393.0" text="操作：" />
@@ -38,13 +38,18 @@
           </items>
       </ChoiceBox>
       <Button layoutX="847.0" layoutY="498.0" mnemonicParsing="false" onAction="#operationAction" prefHeight="75.0" prefWidth="126.0" text="随机执行一次所选操作" wrapText="true" />
-      <TextArea fx:id="opeRecord" layoutX="354.0" layoutY="244.0" prefHeight="364.0" prefWidth="364.0" text="" wrapText="true" />
-      <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="5.0" layoutY="52.0" nodeOrientation="LEFT_TO_RIGHT" pannable="true" prefHeight="156.0" prefWidth="1016.0" vbarPolicy="ALWAYS">
+      <TextArea fx:id="opeRecord" layoutX="354.0" layoutY="244.0" prefHeight="364.0" prefWidth="364.0" promptText="操作记录：" scrollTop="1.0" text="" wrapText="true" />
+      <ScrollPane fx:id="scrollPane" layoutX="5.0" layoutY="52.0" nodeOrientation="LEFT_TO_RIGHT" pannable="true" prefHeight="156.0" prefWidth="1016.0">
          <content>
           <AnchorPane fx:id="scrollAnchor" minHeight="0.0" minWidth="0.0" prefHeight="157.0" prefWidth="990.0">
                <children>
-                   <HBox fx:id="textHBox" alignment="BOTTOM_LEFT" prefHeight="51.0" prefWidth="991.0" />
-                  <HBox fx:id="rectangleHBox" layoutY="53.0" prefHeight="82.0" prefWidth="991.0" />
+                  <VBox fx:id="drawVBox" prefHeight="157.0" prefWidth="992.0">
+                     <children>
+                         <HBox fx:id="textHBox" alignment="BOTTOM_LEFT" prefHeight="50.0" prefWidth="992.0" />
+                        <HBox fx:id="rectangleHBox" prefHeight="57.0" prefWidth="992.0" />
+                        <HBox fx:id="bottomHBox" alignment="BOTTOM_LEFT" prefHeight="50.0" prefWidth="992.0" />
+                     </children>
+                  </VBox>
                </children>
           </AnchorPane>
          </content>
@@ -57,5 +62,6 @@
       </HBox>
       <Label fx:id="spaceSizeLab" layoutX="846.0" layoutY="286.0" prefHeight="24.0" prefWidth="120.0" text="Label" />
       <Label fx:id="pageSizeLab" layoutX="846.0" layoutY="324.0" text="Label" />
+      <Button layoutX="918.0" layoutY="208.0" mnemonicParsing="false" onAction="#backBtnAction" prefHeight="24.0" prefWidth="83.0" text="复原" />
    </children>
 </AnchorPane>
