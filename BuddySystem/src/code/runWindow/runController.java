@@ -221,7 +221,7 @@ public class runController implements Initializable{
 
             Text start = new Text(one.start+"");
             Text end = new Text(one.end+"");
-            start.setStyle("-fx-font-size: 10;-fx-border-color: #ff0000;-fx-border-width: 1");   //为啥边界没用咧，我还想着分开呢
+            start.setStyle("-fx-font-size: 10;-fx-border-color: #ef1010;-fx-border-width: 1");   //为啥边界没用咧，我还想着分开呢
             end.setStyle("-fx-font-size: 10;-fx-border-color: red");
 
             Rectangle gap = new Rectangle();
