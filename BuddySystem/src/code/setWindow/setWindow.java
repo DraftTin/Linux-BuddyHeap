@@ -2,10 +2,12 @@ package code.setWindow;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -13,7 +15,6 @@ import javafx.stage.StageStyle;
 import code.manager.BuddyHeapMgr;
 
 public class setWindow extends Application {
-
     private static Stage primaryStageObj;
 
     @Override

@@ -43,6 +43,9 @@ public class setController implements  Initializable{
     @FXML private ChoiceBox pageSizeBtn;
     @FXML private ChoiceBox spaceSizeBtn;
 
+    private double xOffset;
+    private double yOffset;
+
 
     public setController(){
         instance = this;
@@ -89,9 +92,25 @@ public class setController implements  Initializable{
         });
     }
 
+
+    //窗口拖拽
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        rootPane.setOnMousePressed(event -> {
+            xOffset = setWindow.getPrimaryStage().getX() - event.getScreenX();
+            yOffset = setWindow.getPrimaryStage().getY() - event.getScreenY();
+            rootPane.setCursor(Cursor.CLOSED_HAND);
+        });
 
+        rootPane.setOnMouseDragged(event -> {
+            setWindow.getPrimaryStage().setX(event.getScreenX() + xOffset);
+            setWindow.getPrimaryStage().setY(event.getScreenY() + yOffset);
+
+        });
+
+        rootPane.setOnMouseReleased(event -> {
+            rootPane.setCursor(Cursor.DEFAULT);
+        });
     }
 
 

@@ -36,6 +36,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
@@ -55,7 +56,9 @@ public class runController implements Initializable{
     @FXML private TextArea opeRecord;
     @FXML private HBox textHBox;
     @FXML private HBox rectangleHBox;
+    @FXML private HBox bottomHBox;
     @FXML private AnchorPane rootPane;
+    @FXML private VBox drawVBox;
     private double posX = 0;
     private double posY = 0;
     private int pageNum = 0; //页数
@@ -70,6 +73,14 @@ public class runController implements Initializable{
 
     private final double vBarValue = 0.16985138004246284; //运行得来的数据，贼傻。换个尺寸就不对了
     private  double oralHeight = 1;
+
+    private double scrollHeight; //记录画板原大小
+    private double scrollWidth;
+    private double scrollScaleX;
+    private double scrollScaleY;
+
+    private double xOffset;
+    private double yOffset;
 
     public static String getPageSize() {
         return pageSize;
@@ -100,7 +111,8 @@ public class runController implements Initializable{
         String option = operationChoice.getValue().toString();
         if(option.equals("申请")) operateIndex = 1;
         else if(option.equals("释放")) operateIndex = 2;
-        opeRecord.setText(opeRecord.getText() + buddyHeapMgr.run(operateIndex));  //记录操作信息
+        //opeRecord.setText(opeRecord.getText() + buddyHeapMgr.run(operateIndex));  //记录操作信息
+        opeRecord.appendText(buddyHeapMgr.run(operateIndex));
         operateNum++;
 
         drawState();
@@ -121,6 +133,11 @@ public class runController implements Initializable{
         tabPane.getTabs().add(newTab);
         tabPane.getSelectionModel().select(newTab);
 
+    }
+
+    public void backBtnAction(){    //恢复画板
+        scrollAnchor.getTransforms().clear();
+        scrollAnchor.setPrefSize(scrollWidth,scrollHeight);
 
     }
 
@@ -152,6 +169,14 @@ public class runController implements Initializable{
         }
     }
 
+    private int countNumber(int input){ //计算一个整数的位数
+        int res = 1;
+        while(input / 10 != 0){
+            input = input / 10;
+            res++;
+        }
+        return res;
+    }
     public void drawState(){
         emptyDraw();  //画之前先清空
 
@@ -209,7 +234,7 @@ public class runController implements Initializable{
             newRec.setArcHeight(newRec.getWidth()/10);
             newRec.setArcWidth(newRec.getArcHeight());
             if(one.ifFree){
-                newRec.setFill(Color.GREEN);
+                newRec.setFill(Color.LIMEGREEN);
             }else{
                 newRec.setFill(Color.RED);
             }
@@ -219,17 +244,42 @@ public class runController implements Initializable{
 
             rectangleHBox.getChildren().add(newRec);
 
-            Text start = new Text(one.start+"");
-            Text end = new Text(one.end+"");
-            start.setStyle("-fx-font-size: 10;-fx-border-color: #ef1010;-fx-border-width: 1");   //为啥边界没用咧，我还想着分开呢
-            end.setStyle("-fx-font-size: 10;-fx-border-color: red");
+            double font_size = 18;   //默认字体大小为18
+            double limit1 = newRec.getWidth();  //字体大小不能超出这两个
+            double limit2 = textHBox.getPrefHeight() / countNumber(one.start) - 6;  //很少会有边界点，考虑一个就行了
+            if (font_size > Math.min(limit1,limit2)) font_size = Math.min(limit1,limit2);
+            System.out.println(font_size);
+
+            Label start = new Label(one.start+"");
+            Label end = new Label(one.end+"");
+            start.setFont(Font.font(font_size));start.setWrapText(true);start.setPrefWidth(newRec.getWidth());start.setPrefHeight(textHBox.getPrefHeight());
+            end.setFont(Font.font(font_size));end.setWrapText(true);end.setPrefWidth(newRec.getWidth());end.setPrefHeight(textHBox.getPrefHeight());
+            start.setStyle("-fx-border-style: solid inside;" +
+                    "-fx-border-width: 1;" +
+                    "-fx-border-insets: 1;" +
+                    "-fx-border-radius: 3;" +
+                    "-fx-border-color: #0aebff");
+            end.setStyle("-fx-border-style: solid inside;" +
+                    "-fx-border-width: 1;" +
+                    "-fx-border-insets: 1;" +
+                    "-fx-border-radius: 3;" +
+                    "-fx-border-color: #ff520c;");
 
             Rectangle gap = new Rectangle();
             gap.setOpacity(0);   //设置一个透明的间隔
-            gap.setHeight(51); gap.setWidth(newRec.getWidth()*0.95);
+            gap.setHeight(51);
+            gap.setWidth(1);
+            if(Integer.parseUnsignedInt(pageSize.replace("KB","")) == 1){
+                gap.setWidth(0);
+            }
             textHBox.getChildren().add(start);
             textHBox.getChildren().add(gap);
-            textHBox.getChildren().add(end);
+            bottomHBox.getChildren().add(end);
+            gap.setWidth(gap.getWidth()-3);  //我也不知道上下一摸一样为什么会差了3个像素
+            if(Integer.parseUnsignedInt(pageSize.replace("KB","")) == 1){
+                gap.setWidth(0);
+            }
+            bottomHBox.getChildren().add(gap);
         }
     }
 
@@ -248,6 +298,24 @@ public class runController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
        // scrollPane.removeEventHandler(ScrollEvent.SCROLL,scrollPane.getOnScroll()); //想要消除滑动条自带的滚轮上下，不会
         oralHeight = scrollAnchor.getPrefHeight();
+
+        
+//        drawVBox.setPrefWidth(drawVBox.getPrefWidth()*3);
+//        drawVBox.setPrefHeight(drawVBox.getPrefHeight()*3);
+//        scrollAnchor.setPrefWidth(scrollAnchor.getPrefWidth()*3);
+//        scrollAnchor.setPrefHeight(scrollAnchor.getPrefHeight()*3);
+//        scrollPane.setVvalue(0.5);
+//        drawVBox.setAlignment(Pos.CENTER);
+//        textHBox.setPrefWidth(textHBox.getPrefWidth()*3);textHBox.setAlignment(Pos.TOP_CENTER);
+//        rectangleHBox.setPrefWidth(rectangleHBox.getPrefWidth()*3);rectangleHBox.setAlignment(Pos.TOP_CENTER);
+//        bottomHBox.setPrefWidth(bottomHBox.getPrefWidth()*3);bottomHBox.setAlignment(Pos.TOP_CENTER);
+//        scrollPane.setHvalue(0.5);
+
+        //记录画板原大小
+        scrollHeight = scrollAnchor.getPrefHeight();
+        scrollWidth = scrollAnchor.getPrefWidth();
+        scrollScaleX = scrollAnchor.getScaleX();
+        scrollScaleY = scrollAnchor.getScaleY();
 
         BuddyHeapMgr.Config config = new BuddyHeapMgr.Config();
         config.init(turnStringToOpt(spaceSize),turnStringToOpt(pageSize));
@@ -296,10 +364,16 @@ public class runController implements Initializable{
 
                 //System.out.println(scrollPane.getVvalue() +" "+scrollPane.getHvalue());
             }
+        });
+        scrollAnchor.addEventHandler(ScrollEvent.SCROLL,event -> {
             //我找不到取消自带鼠标滚动的方法，所以自己弄一个固定的
-            System.out.println(event.getDeltaY() + " || "+scrollPane.getVvalue() +" || "+scrollAnchor.getPrefHeight());
-            ScrollBar vVar = new ScrollBar();
-
+            //System.out.println(event.getDeltaY() + " || "+scrollPane.getVvalue() +" || "+scrollAnchor.getPrefHeight());
+            double rate = 0;
+            if(event.getDeltaY() > 0){
+                rate = 0.05;
+            }else{
+                rate = -0.05;
+            }
             if(rate > 0 ){ //如果大于0，说明是往上滚的，V会变小
                 scrollPane.setVvalue(scrollPane.getVvalue() + vBarValue/(scrollAnchor.getHeight()/oralHeight));
             }else {
@@ -328,5 +402,21 @@ public class runController implements Initializable{
 //            scrollPane.setVvalue(scrollPane.getVvalue()-changeY);
 //        });
 
+        //窗口拖拽
+        rootPane.setOnMousePressed(event -> {
+            xOffset = setWindow.getPrimaryStage().getX() - event.getScreenX();
+            yOffset = setWindow.getPrimaryStage().getY() - event.getScreenY();
+            rootPane.setCursor(Cursor.CLOSED_HAND);
+        });
+
+        rootPane.setOnMouseDragged(event -> {
+            setWindow.getPrimaryStage().setX(event.getScreenX() + xOffset);
+            setWindow.getPrimaryStage().setY(event.getScreenY() + yOffset);
+
+        });
+
+        rootPane.setOnMouseReleased(event -> {
+            rootPane.setCursor(Cursor.DEFAULT);
+        });
     }
 }
