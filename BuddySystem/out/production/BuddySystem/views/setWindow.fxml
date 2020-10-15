@@ -16,8 +16,8 @@
          <children>
             <HBox alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="541.0">
                <children>
-                  <Button fx:id="minBtn" mnemonicParsing="false" onAction="#minWindow" />
-                  <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeSystem" />
+                  <Button id="minBtn" fx:id="minBtn" mnemonicParsing="false" onAction="#minWindow" prefHeight="37.0" prefWidth="44.0" />
+                  <Button id="closeBtn" fx:id="closeBtn" mnemonicParsing="false" onAction="#closeSystem" prefHeight="23.0" prefWidth="31.0" />
                </children>
             </HBox>
             <VBox prefHeight="320.0" prefWidth="541.0">
@@ -64,7 +64,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="53.0" prefWidth="450.0">
                      <children>
-                        <Button fx:id="sureBtn" mnemonicParsing="false" onAction="#sureButtonAction">
+                        <Button id="sureBtn" fx:id="sureBtn" mnemonicParsing="false" onAction="#sureButtonAction" text="确定">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>

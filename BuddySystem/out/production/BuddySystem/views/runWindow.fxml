@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="rootPane" prefHeight="620.0" prefWidth="1024.0" stylesheets="@../css/runWindow.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.runWindow.runController">
+<AnchorPane fx:id="rootPane" prefHeight="624.0" prefWidth="1041.0" stylesheets="@../css/runWindow.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.runWindow.runController">
    <children>
       <TabPane fx:id="tabPane" layoutX="42.0" layoutY="245.0" prefHeight="372.0" prefWidth="294.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -25,11 +25,11 @@
           </Tab>
         </tabs>
       </TabPane>
-      <Label layoutX="766.0" layoutY="244.0" text="初始信息：" />
-      <Label layoutX="725.0" layoutY="286.0" text="内存空间大小:" />
-      <Label layoutX="743.0" layoutY="324.0" text="页框大小:" />
-      <Label layoutX="766.0" layoutY="393.0" text="操作：" />
-      <ChoiceBox fx:id="operationChoice" layoutX="835.0" layoutY="393.0" prefWidth="150.0" value="申请">
+      <Label layoutX="827.0" layoutY="252.0" text="初始信息：" />
+      <Label layoutX="786.0" layoutY="294.0" text="内存空间大小:" />
+      <Label layoutX="804.0" layoutY="332.0" text="页框大小:" />
+      <Label layoutX="801.0" layoutY="395.0" text="操作：" />
+      <ChoiceBox fx:id="operationChoice" layoutX="870.0" layoutY="395.0" prefWidth="150.0" value="申请">
           <items>
               <FXCollections fx:factory="observableArrayList">
                   <String fx:value="申请" />
@@ -37,9 +37,9 @@
               </FXCollections>
           </items>
       </ChoiceBox>
-      <Button layoutX="847.0" layoutY="498.0" mnemonicParsing="false" onAction="#operationAction" prefHeight="75.0" prefWidth="126.0" text="随机执行一次所选操作" wrapText="true" />
+      <Button id="excuteBtn" layoutX="882.0" layoutY="488.0" mnemonicParsing="false" onAction="#operationAction" prefHeight="75.0" prefWidth="126.0" text="随机执行一次所选操作" wrapText="true" />
       <TextArea fx:id="opeRecord" layoutX="354.0" layoutY="244.0" prefHeight="364.0" prefWidth="364.0" promptText="操作记录：" scrollTop="1.0" text="" wrapText="true" />
-      <ScrollPane fx:id="scrollPane" layoutX="5.0" layoutY="52.0" nodeOrientation="LEFT_TO_RIGHT" pannable="true" prefHeight="156.0" prefWidth="1016.0">
+      <ScrollPane fx:id="scrollPane" layoutX="5.0" layoutY="52.0" nodeOrientation="LEFT_TO_RIGHT" pannable="true" prefHeight="156.0" prefWidth="1030.0">
          <content>
           <AnchorPane fx:id="scrollAnchor" minHeight="0.0" minWidth="0.0" prefHeight="157.0" prefWidth="990.0">
                <children>
@@ -54,14 +54,14 @@
           </AnchorPane>
          </content>
       </ScrollPane>
-      <HBox alignment="TOP_RIGHT" layoutY="1.0" prefHeight="51.0" prefWidth="1025.0">
+      <HBox alignment="TOP_RIGHT" layoutY="1.0" prefHeight="51.0" prefWidth="1041.0">
          <children>
-            <Button fx:id="min_btn" mnemonicParsing="false" onAction="#minWindow" text="Button" />
-            <Button fx:id="close_btn" mnemonicParsing="false" onAction="#closeSystem" text="Button" />
+            <Button id="minBtn" fx:id="min_btn" mnemonicParsing="false" onAction="#minWindow" />
+            <Button id="closeBtn" fx:id="close_btn" mnemonicParsing="false" onAction="#closeSystem" prefHeight="50.0" prefWidth="48.0" />
          </children>
       </HBox>
-      <Label fx:id="spaceSizeLab" layoutX="846.0" layoutY="286.0" prefHeight="24.0" prefWidth="120.0" text="Label" />
-      <Label fx:id="pageSizeLab" layoutX="846.0" layoutY="324.0" text="Label" />
-      <Button layoutX="918.0" layoutY="208.0" mnemonicParsing="false" onAction="#backBtnAction" prefHeight="24.0" prefWidth="83.0" text="复原" />
+      <Label fx:id="spaceSizeLab" layoutX="907.0" layoutY="294.0" prefHeight="24.0" prefWidth="120.0" text="Label" />
+      <Label fx:id="pageSizeLab" layoutX="907.0" layoutY="332.0" text="Label" />
+      <Button id="backBtn" layoutX="944.0" layoutY="208.0" mnemonicParsing="false" onAction="#backBtnAction" prefHeight="24.0" prefWidth="83.0" text="复原" />
    </children>
 </AnchorPane>
