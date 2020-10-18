@@ -225,14 +225,14 @@ public class BuddyHeapMgr {
 	// 描述：随机申请一定数量的的页框
 	public String randomAllocate() {  /////////////////////////
 		String res = "";
-		int size = (int)(Math.random() * 1.1 * alloSizeOpt.get(NUM - 1)) + 1;
+		int size = (int)(Math.random() * 1.1 * alloSizeOpt.get(NUM - 1));
 		System.out.println("申请页框数: " + size);
 		res += "申请页框数: " + size +" | " + malloc(size) + "\n";
 		return res;
 	}
 
 	// 描述：随机释放某个页框
-	public String randomFree() {   /////////////////////////////
+	public String randomFree() {/////////////////////////////
         if(tmpPageNum.isEmpty()) {
             System.out.println("没有能够释放的空间");
             return "没有能够释放的空间\n";
@@ -295,8 +295,6 @@ public class BuddyHeapMgr {
     public void term() {
 	    System.out.println("Bye");
     }
-
-    public void play() {System.out.println("playing");}
 
 //	public static void main(String[] args) {   ///////////////////////////////////////////////////////////////
 //		Config config = new Config();
