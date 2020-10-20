@@ -167,6 +167,9 @@ public class runController implements Initializable{
         while(!textHBox.getChildren().isEmpty()){
             textHBox.getChildren().remove(0);
         }
+        while(!bottomHBox.getChildren().isEmpty()){
+            bottomHBox.getChildren().remove(0);
+        }
     }
 
     private int countNumber(int input){ //计算一个整数的位数
@@ -193,7 +196,41 @@ public class runController implements Initializable{
                 pageBlockTreeSet.add(pageBlock);
             }
         }
-        System.out.println("TreeSetdaxiao:"+pageBlockTreeSet.size());
+        //如果一个空闲块都没有的话，就画一整个红色的
+        if(pageBlockTreeSet.size() == 0){
+            Rectangle firstRec = new Rectangle();
+            firstRec.setHeight(rectangleHBox.getPrefHeight());
+            firstRec.setWidth(rectangleHBox.getPrefWidth());
+            firstRec.setArcHeight(10);
+            firstRec.setArcWidth(10);
+            firstRec.setFill(Color.RED);
+            rectangleHBox.getChildren().add(firstRec);
+            Label start = new Label(0+"");
+            //计算最后一位
+            int tempSpace = Integer.parseInt(spaceSize.replace("MB",""));
+            int tempPage = Integer.parseInt(pageSize.replace("KB",""));
+            int lastNumber = tempSpace / tempPage * 1024;
+            Label end = new Label(lastNumber+"");
+            //************样式信息*****************//
+            start.setFont(Font.font(20));start.setWrapText(true);start.setPrefWidth(firstRec.getWidth());start.setPrefHeight(textHBox.getPrefHeight());
+            end.setFont(Font.font(20));end.setWrapText(true);end.setPrefWidth(firstRec.getWidth());end.setPrefHeight(bottomHBox.getPrefHeight());
+            start.setStyle("-fx-border-style: solid inside;" +
+                    "-fx-border-width: 1;" +
+                    "-fx-border-insets: 1;" +
+                    "-fx-border-radius: 3;" +
+                    "-fx-border-color: #0aebff");
+            end.setStyle("-fx-border-style: solid inside;" +
+                    "-fx-border-width: 1;" +
+                    "-fx-border-insets: 1;" +
+                    "-fx-border-radius: 3;" +
+                    "-fx-border-color: #ff520c;");
+            //************样式信息*****************//
+            textHBox.getChildren().add(start);
+            bottomHBox.getChildren().add(end);
+            return;
+        }
+
+
         //接下来由空闲区来互补生成占用区。
         //如果第一个不是从0开始的，那么就把第一个作为忙碌加进去
         if(pageBlockTreeSet.first().start != 0){
@@ -220,18 +257,15 @@ public class runController implements Initializable{
             pageBlockTreeSet.add(lastOne);
         }
 
-        for(PageBlock temp:pageBlockTreeSet){
-            System.out.println(temp.start+"-"+temp.end);
-        }
-
         //准备工作完毕，正式开始依据TreeSet画图
         //先画下面的矩形,顺带把上面的Text也画了
         for(PageBlock one : pageBlockTreeSet){
+            //这个是中间的矩形
             Rectangle newRec = new Rectangle();
-            newRec.setHeight(82);
+            newRec.setHeight(rectangleHBox.getPrefHeight());
             double percentage = (double)(one.end-one.start)/pageNum;
             newRec.setWidth(percentage * rectangleHBox.getPrefWidth());
-            newRec.setArcHeight(newRec.getWidth()/10);
+            newRec.setArcHeight(newRec.getWidth()/10);  //弧度值
             newRec.setArcWidth(newRec.getArcHeight());
             if(one.ifFree){
                 newRec.setFill(Color.LIMEGREEN);
@@ -240,46 +274,62 @@ public class runController implements Initializable{
             }
             newRec.setStroke(Color.BLACK);
             newRec.setStrokeType(StrokeType.INSIDE);
-            //<Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="80.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+            //添加一个点击此块就弹出起始和终止信息的功能
+            String tempS = "起始位:"+one.start+" 终止位:"+one.end;
+            if(one.ifFree) tempS += " 空闲";
+            else tempS += " 占用";
+            newRec.setAccessibleText(tempS);
+            newRec.addEventHandler(MouseEvent.MOUSE_CLICKED,event -> {
+                Stage stage = new Stage();
+                Label l = new Label(newRec.getAccessibleText());
+                l.setAlignment(Pos.CENTER);
+                Scene s = new Scene(l,200,100);
+                stage.setScene(s);
+                stage.show();
+            });
 
             rectangleHBox.getChildren().add(newRec);
 
+            //然后画上下两个起始数字块
             double font_size = 18;   //默认字体大小为18
             double limit1 = newRec.getWidth();  //字体大小不能超出这两个
             double limit2 = textHBox.getPrefHeight() / countNumber(one.start) - 6;  //很少会有边界点，考虑一个就行了
             if (font_size > Math.min(limit1,limit2)) font_size = Math.min(limit1,limit2);
-            System.out.println(font_size);
 
             Label start = new Label(one.start+"");
             Label end = new Label(one.end+"");
-            start.setFont(Font.font(font_size));start.setWrapText(true);start.setPrefWidth(newRec.getWidth());start.setPrefHeight(textHBox.getPrefHeight());
-            end.setFont(Font.font(font_size));end.setWrapText(true);end.setPrefWidth(newRec.getWidth());end.setPrefHeight(textHBox.getPrefHeight());
+            //************样式信息*****************//
+            start.setAlignment(Pos.CENTER);start.setFont(Font.font(font_size));start.setWrapText(true);start.setPrefWidth(newRec.getWidth());start.setPrefHeight(textHBox.getPrefHeight());
+            end.setAlignment(Pos.CENTER);end.setFont(Font.font(font_size));end.setWrapText(true);end.setPrefWidth(newRec.getWidth());end.setPrefHeight(bottomHBox.getPrefHeight());
             start.setStyle("-fx-border-style: solid inside;" +
                     "-fx-border-width: 1;" +
-                    "-fx-border-insets: 1;" +
-                    "-fx-border-radius: 3;" +
+                    "-fx-border-insets: 0;" +
+                    "-fx-border-radius: 2;" +
                     "-fx-border-color: #0aebff");
             end.setStyle("-fx-border-style: solid inside;" +
                     "-fx-border-width: 1;" +
-                    "-fx-border-insets: 1;" +
-                    "-fx-border-radius: 3;" +
+                    "-fx-border-insets: 0;" +
+                    "-fx-border-radius: 2;" +
                     "-fx-border-color: #ff520c;");
+            //************样式信息*****************//
 
-            Rectangle gap = new Rectangle();
-            gap.setOpacity(0);   //设置一个透明的间隔
-            gap.setHeight(51);
-            gap.setWidth(1);
-            if(Integer.parseUnsignedInt(pageSize.replace("KB","")) == 1){
-                gap.setWidth(0);
-            }
+            //取消间隔，保证上中下对应
+//            Rectangle gap = new Rectangle();
+//            gap.setOpacity(0);   //设置一个透明的间隔
+//            gap.setHeight(51);
+//            gap.setWidth(1);
+//            //如果最小模式就别再间隔了
+//            if(Integer.parseUnsignedInt(pageSize.replace("KB","")) == 1){
+//                gap.setWidth(0);
+//            }
             textHBox.getChildren().add(start);
-            textHBox.getChildren().add(gap);
+//            textHBox.getChildren().add(gap);
             bottomHBox.getChildren().add(end);
-            gap.setWidth(gap.getWidth()-3);  //我也不知道上下一摸一样为什么会差了3个像素
-            if(Integer.parseUnsignedInt(pageSize.replace("KB","")) == 1){
-                gap.setWidth(0);
-            }
-            bottomHBox.getChildren().add(gap);
+//            gap.setWidth(gap.getWidth()-3);  //我也不知道上下一模一样为什么会差了3个像素
+//            if(Integer.parseUnsignedInt(pageSize.replace("KB","")) == 1){
+//                gap.setWidth(0);
+//            }
+//            bottomHBox.getChildren().add(gap);
         }
     }
 
@@ -298,8 +348,6 @@ public class runController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
        // scrollPane.removeEventHandler(ScrollEvent.SCROLL,scrollPane.getOnScroll()); //想要消除滑动条自带的滚轮上下，不会
         oralHeight = scrollAnchor.getPrefHeight();
-
-        
 //        drawVBox.setPrefWidth(drawVBox.getPrefWidth()*3);
 //        drawVBox.setPrefHeight(drawVBox.getPrefHeight()*3);
 //        scrollAnchor.setPrefWidth(scrollAnchor.getPrefWidth()*3);
@@ -362,7 +410,6 @@ public class runController implements Initializable{
                 //这里还要加一个判断，确定按钮的上限和下限。
 
 
-                //System.out.println(scrollPane.getVvalue() +" "+scrollPane.getHvalue());
             }
         });
         scrollAnchor.addEventHandler(ScrollEvent.SCROLL,event -> {
