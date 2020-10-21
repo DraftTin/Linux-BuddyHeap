@@ -1,0 +1,50 @@
+#rootPane{
+    -fx-background-image: url("../imgs/background540.png");
+}
+
+#closeBtn {
+    -fx-graphic: url("../imgs/close_btn.png");
+    -fx-background-color:transparent;
+    -fx-opacity: 1;
+}
+#closeBtn:hover {
+    -fx-opacity: 0.5;
+}
+#closeBtn:pressed {
+    -fx-opacity: 0.2;
+}
+
+#minBtn {
+    -fx-graphic: url("../imgs/min_btn.png");
+    -fx-background-color: transparent;
+    -fx-opacity: 1;
+
+}
+#minBtn:hover {
+    -fx-opacity: 0.5;
+}
+
+#sureBtn{
+    -fx-color: #ffffff;
+    -fx-padding: 5px 20px;
+    -fx-background-color: linear-gradient(to bottom, #cef6f8 0%, #bef3f6 3%, #85eef5 35%, #4be5ef 97%,#e27f00 100%);
+    -fx-font-family: 'Open Sans', sans-serif;
+    -fx-font-size: 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    -fx-opacity: 1;
+}
+#sureBtn:hover{
+    -fx-cursor: hand;
+    -fx-opacity: 0.5;
+}
+
+#sureBtn:pressed{
+    -fx-opacity: 1;
+    -fx-padding: 5px 20px;
+    -fx-spacing: 10px;
+    -fx-start-margin: 10px;
+    -fx-background-color: linear-gradient(to bottom, #4be5ef 100%, #85eef5 97%, #bef3f6 35%, #cef6f8 3%,#9effc5 0%);
+    -fx-font-family: 'Open Sans', sans-serif;
+    -fx-cursor: hand;
+}

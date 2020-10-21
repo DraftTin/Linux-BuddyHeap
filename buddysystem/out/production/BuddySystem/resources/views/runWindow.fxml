@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.collections.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="rootPane" prefHeight="624.0" prefWidth="1041.0" stylesheets="@../css/runWindow.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.runWindow.runController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="101.0" layoutX="748.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" width="273.0">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#96e4d1" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <TabPane fx:id="tabPane" layoutX="42.0" layoutY="245.0" prefHeight="372.0" prefWidth="294.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="tab0" text="0">
+               <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="255.0" prefWidth="275.0">
+                     <children>
+                        <TextArea fx:id="text0" prefHeight="320.0" prefWidth="294.0" text="不了，这里就只输出空闲内存情况" />
+                     </children>
+                  </AnchorPane>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <Label layoutX="759.0" layoutY="270.0" text="初始信息：" />
+      <Label layoutX="759.0" layoutY="301.0" text="内存空间大小:" />
+      <Label layoutX="759.0" layoutY="330.0" prefHeight="24.0" prefWidth="113.0" text="页框大小      :" />
+      <Label layoutX="748.0" layoutY="391.0" prefHeight="36.0" prefWidth="63.0" text="操作：">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <ChoiceBox fx:id="operationChoice" layoutX="828.0" layoutY="391.0" prefHeight="36.0" prefWidth="159.0" value="申请随机页框数">
+          <items>
+              <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="申请随机页框数" />
+                  <String fx:value="释放随机页框号" />
+                  <String fx:value="释放随机整块空间" />
+                  <String fx:value="申请指定页框数" />
+                  <String fx:value="释放指定页框号" />
+              </FXCollections>
+          </items>
+      </ChoiceBox>
+      <Button id="excuteBtn" alignment="CENTER" layoutX="852.0" layoutY="498.0" mnemonicParsing="false" onAction="#operationAction" prefHeight="71.0" prefWidth="159.0" text="执行操作" textOverrun="WORD_ELLIPSIS" wrapText="true">
+         <font>
+            <Font name="Microsoft YaHei Bold" size="39.0" />
+         </font></Button>
+      <TextArea fx:id="opeRecord" layoutX="354.0" layoutY="244.0" prefHeight="364.0" prefWidth="364.0" promptText="操作记录：" scrollTop="1.0" text="" wrapText="true" />
+      <ScrollPane fx:id="scrollPane" layoutX="5.0" layoutY="52.0" nodeOrientation="LEFT_TO_RIGHT" pannable="true" prefHeight="156.0" prefWidth="1030.0">
+         <content>
+          <AnchorPane fx:id="scrollAnchor" minHeight="0.0" minWidth="0.0" prefHeight="157.0" prefWidth="990.0">
+               <children>
+                  <VBox fx:id="drawVBox" prefHeight="157.0" prefWidth="992.0">
+                     <children>
+                         <HBox fx:id="textHBox" alignment="BOTTOM_LEFT" prefHeight="50.0" prefWidth="992.0" />
+                        <HBox fx:id="rectangleHBox" prefHeight="57.0" prefWidth="992.0" />
+                        <HBox fx:id="bottomHBox" alignment="BOTTOM_LEFT" prefHeight="50.0" prefWidth="992.0" />
+                     </children>
+                  </VBox>
+               </children>
+          </AnchorPane>
+         </content>
+      </ScrollPane>
+      <HBox alignment="TOP_RIGHT" layoutY="1.0" prefHeight="51.0" prefWidth="1041.0">
+         <children>
+            <Button id="askButton" fx:id="askButton" mnemonicParsing="false" onAction="#askInfo" prefHeight="53.0" prefWidth="60.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="52.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="883.0" />
+            <Button id="minBtn" fx:id="min_btn" mnemonicParsing="false" onAction="#minWindow" prefHeight="56.0" prefWidth="50.0" />
+            <Button id="closeBtn" fx:id="close_btn" mnemonicParsing="false" onAction="#closeSystem" prefHeight="50.0" prefWidth="48.0" />
+         </children>
+      </HBox>
+      <Label fx:id="spaceSizeLab" layoutX="889.0" layoutY="301.0" prefHeight="24.0" prefWidth="120.0" text="Label" textFill="#ff4c00" />
+      <Label fx:id="pageSizeLab" layoutX="889.0" layoutY="330.0" text="Label" textFill="#ff4c00" />
+      <Button id="backBtn" layoutX="949.0" layoutY="215.0" mnemonicParsing="false" onAction="#backBtnAction" prefHeight="24.0" prefWidth="83.0" text="复原" />
+      <TextArea fx:id="inputText" layoutX="828.0" layoutY="439.0" prefHeight="48.0" prefWidth="159.0" promptText="提示信息" visible="false" />
+   </children>
+</AnchorPane>
