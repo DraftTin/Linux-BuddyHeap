@@ -206,7 +206,7 @@ public class BuddyHeapMgr {
 		int pos = 0;	// pos为处理的伙伴位图的组号
 		int val = 2;
 		while(pos < NUM && !bitMap.get(pos).isEmpty() && bitMap.get(pos).get(bgPos) == 1) {
-			// 循环将快组位图中对应的位置置为0，直到到达NUM，或直到对应的块组位图没有伙伴了表示生成了能够分配的最大空间
+			// 循环将块组位图中对应的位置置为0，直到到达NUM，或直到对应的块组位图没有伙伴了表示生成了能够分配的最大空间
 			bitMap.get(pos).set(bgPos, 0);
             if(pos != NUM - 1) {
                 // 如果最大的空闲区组形成了更大的空闲区，则不应该合成更大的空闲区（限制）
